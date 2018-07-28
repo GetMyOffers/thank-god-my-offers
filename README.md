@@ -1,1 +1,2 @@
-# thank-god-my-offers
+这个repo记录所有面试内容，以及我的总结。
+欢迎来贡献，祝大家offer多多！！
