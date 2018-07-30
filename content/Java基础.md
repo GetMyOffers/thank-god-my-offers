@@ -1,1 +1,7 @@
+# 1.HashMap和concurrentHashMap
+> 聊到HashMap你要转到concurrentHashMap;聊到concurrentHashMap你要转到HashMap；然后熟悉的话甚至可以把整个容器的那些类都谈一下；掌握主动权。
+1.Jdk1.8之前，hashmap底层是由数组加链表实现的。但是他不是线程安全的，jdk给他提供了几种线程安全的解决办法。
+①hashtable,加上锁，但是锁定的是整个对象，所以效率十分低下，现在已经是作为一个遗留类了，非常不推荐使用。
+②Collections.sychronizedMap(…),这个就是稍微锁细化了一下，效率得到了提升，但是还是很鸡肋。
+③这个时候著名的Doug Lea大神的JUC包给我们提供了一个线程安全的concurrenthashmap类，这个类在jdk1.8之前是由数组加链表实现的，但多了一个segement的概念
 
