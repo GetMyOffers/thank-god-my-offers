@@ -77,7 +77,9 @@ JMM会对每个线程分配一个区域（包括程序计数器、虚拟机栈�
 
 就请去多线程那边看吧！
 
-
+## References
+1. [JVM（2）：JVM内存结构](http://www.importnew.com/23746.html)
+2. [GC详解及Minor GC和Full GC触发条件总结](https://blog.csdn.net/yhyr_ycy/article/details/52566105)
 
 
 
