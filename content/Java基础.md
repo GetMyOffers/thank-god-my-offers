@@ -5,6 +5,7 @@ java.io大概有80个类，主要分为以下4种：
 基于磁盘操作的I/O接口：File
 基于网络操作的I/O接口：Socket(不在java.io包下)
 
+2.java.io中用到了哪些设计模式？简单介绍一下。
 java I/O中的装饰者模式
         抽象构件：InputStream 
 	抽象装饰(继承inputStream)：FilterInputStream
@@ -24,11 +25,12 @@ java I/O中的适配器模式
          适配器类：CharArrayReader，StringReader，InputStreamReader,PipedReader
 OutputStream和Writer同理
 
+3.java访问磁盘文件的步骤
 java访问磁盘文件：
-1.传入文件路径。
-2.根据路径创建File对象来标识这个文件
-3.根据File对象创建真正读取文件的操作对象FileDescriptor（文件描述符），通过这个对象可以直接控制这个磁盘文件
-4.StreamDecoder类将byte解码为char格式
+1).传入文件路径。
+2).根据路径创建File对象来标识这个文件
+3).根据File对象创建真正读取文件的操作对象FileDescriptor（文件描述符），通过这个对象可以直接控制这个磁盘文件
+4).StreamDecoder类将byte解码为char格式
 
 关于FileDescriptor类：
 `private int fd;
@@ -47,13 +49,14 @@ public static final FileDescriptor out = new FileDescriptor(1);
 public static final FileDescriptor err = new FileDescriptor(2);
 Sytem的in,out,err是通过FileDescriptor中的in,out,err来实现的
 
-对字节流进行大量的从硬盘读取，用BufferedInputStream, 使用缓冲流能够减少对硬盘的损伤
+4.对字节流进行大量的从硬盘读取，用BufferedInputStream, 使用缓冲流能够减少对硬盘的损伤
 Printwriter 可以打印各种数据类型。
-怎么样把输出字节流转换成 输出字符流,说出它的步骤： 转换处理流OutputStreamWriter 可以将字节流转为字符流 New OutputStreamWriter（new FileOutputStream（File file））;
-输入字节流转换为输入字符流同理。
-但真正负责编码的类是StreamEncoder和StreamDecoder。
-以StreamDecoder为例：
-已知：InputStream到Reader的过程要指定编码字符集，否则将采用操作系统默认字符集
+5.怎么样把输出字节流转换成 输出字符流,说出它的步骤： 
+   转换处理流OutputStreamWriter 可以将字节流转为字符流 New OutputStreamWriter（new FileOutputStream（File file））;
+    输入字节流转换为输入字符流同理。
+   但真正负责编码的类是StreamEncoder和StreamDecoder。
+   以StreamDecoder为例：
+   已知：InputStream到Reader的过程要指定编码字符集，否则将采用操作系统默认字符集
 查看源码知：
 `public class InputStreamReader extends Reader {  
      private final StreamDecoder sd;//由上图已知在InputStreamReader中一定有一个StreamDecoder对象  
