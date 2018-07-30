@@ -34,5 +34,5 @@ System.out.println("hahah");
 
 ## References
 
-[某某博客]()
-[某某文档]()
+[某某博客](https://github.com/Lisanaaa/thank-god-my-offers/blob/develop/Pull%20Request%20%E6%A8%A1%E7%89%88.md)
+[某某文档](https://github.com/Lisanaaa/thank-god-my-offers/blob/develop/Pull%20Request%20%E6%A8%A1%E7%89%88.md)
