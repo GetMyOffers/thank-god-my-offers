@@ -8,9 +8,8 @@ java.io大概有80个类，主要分为以下4种：
 java I/O中的装饰者模式
         抽象构件：InputStream 
 	抽象装饰(继承inputStream)：FilterInputStream
-	具体构件(继承inputStream)：
-ByteArrayInputStream,FileInputStream,PipedInputStream,StringBufferInputStream
-	具体装饰(继承FilterInputStream)：			DataInputStream,BufferInputStreamLineNumberInputStream,PushBackInputStream
+	具体构件(继承inputStream)：ByteArrayInputStream,FileInputStream,PipedInputStream,StringBufferInputStream
+	具体装饰(继承FilterInputStream)：DataInputStream,BufferInputStreamLineNumberInputStream,PushBackInputStream
 
         抽象构件：Reader
 	抽象装饰(继承Reader)：BufferedReader,FilterReader
