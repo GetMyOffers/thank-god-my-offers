@@ -5,4 +5,6 @@
 
 Pull Request 模版：[Pull Request 模版](https://github.com/Lisanaaa/thank-god-my-offers/blob/develop/Pull%20Request%20%E6%A8%A1%E7%89%88.md)
 
+Github团队协作教程：[Github团队协作教程](https://www.cnblogs.com/thousfeet/p/7840932.html)
+
 ## 请大家务必提 PR 到 develop 分支上
