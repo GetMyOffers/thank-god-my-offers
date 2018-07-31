@@ -1,4 +1,4 @@
-### 1. wait, sleep区别
+### 1.	wait, sleep区别
 
 1. `wait()`方法属于java.lang.Object, `sleep()`属于java.lang.Thread
 2. `wait()`表示等待在一个对象上线,需要获得这个对象的锁,否则抛出`IllegalMonitorStateException`
@@ -7,7 +7,7 @@
 
 
 
-### 2. wait, sleep 区别,调用 wait 方法后,如何唤醒线程
+### 2.	wait, sleep 区别,调用 wait 方法后,如何唤醒线程
 
 1. 区别略
 2. 如何唤醒调用 `wait()`方法的线程
@@ -16,13 +16,13 @@
 
 
 
-### 3. volatile关键字怎么保证可见性
+### 3.	volatile关键字怎么保证可见性
 
-#### 3.1 明确什么是可见性
+#### 3.1	明确什么是可见性
 
 可见性是指对一个在堆上的变量的修改,每个线程都能看到这个变量的最新的值.
 
-#### 3.2 为什么会出现可见性问题
+#### 3.2	为什么会出现可见性问题
 
 java 因为跨平台,抽象了一套属于自己的内存模型.存在一个主内存和每个线程都拥有的本地内存.
 
@@ -41,7 +41,55 @@ volatile 是通过插入内存屏障与禁止指令重排序来保证 volatile �
 再底层原理,在x86 架构上,编译成的本地代码,对这些变量的操作,会插入一个 lock 指令.涉及到缓存一致性协议了~
 
 
-### 4. long类型的操作是原子性吗？为什么？
+#### 4.1	反射的作用
+
+1. 可以于运行时加载,探知和使用编译期间完全未知的类
+2. 程序在运行状态中, 可以动态加载一个只有名称的类, 对于任意一个已经加载的类,都能够知道这个类的所有属性和方法; 对于任意一个对象,都能调用他的任意一个方法和属性
+3. 加载完类之后, 在堆内存中会产生一个Class类型的对象(一个类只有一个Class对象), 这个对象包含了完整的类的结构信息,而且这个Class对象就像一面镜子,透过这个镜子看到类的结构,所以被称之为:反射
+4. 每个类被加载进入内存之后,系统就会为该类生成一个对应的java.lang.Class对象,通过该Class对象就可以访问到JVM中的这个类
+
+#### 4.2	获取Class对象的方式
+1. 对象的getClass()方法
+2. 类的.class(最安全/性能最好)属性
+3. 运用Class.forName(String className)动态加载类,className需要是类的全限定名(最常用)
+
+#### 4.2	获取Class中的信息
+- 构造器：`Constructor<T> getConstructor(Class<?>... parameterTypes)`
+- 方法：`Method getMethod(String name, Class<?>... parameterTypes)`
+- 属性：`Field getField(String name)`
+- 注解：`<A extends Annotation A getAnnotation(Class<A> annotationClass)`
+- 内部类：`Class<?>[] getDeclaredClasses()`
+- 外部类：`Class<?> getDeclaringClass()`
+- 所实现的接口：`Class<?>[] getInterfaces()`
+- 修饰符：`int getModifiers()`
+
+[https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html "Class使用文档")
+
+#### 4.3	使用Class的反射
+1. 创建对象
+	1. 使用Class对象的newInstance()方法来创建该Class对象对应类的实例(这种方式要求该Class对象的对应类有默认构造器).
+	2. 先使用Class对象获取指定的Constructor对象, 再调用Constructor对象的newInstance()方法来创建该Class对象对应类的实例(通过这种方式可以选择指定的构造器来创建实例).
+	3. 场景使用：对象池技术
+2. 调用方法
+	1. 通过该Class对象的getMethod来获取一个Method数组或Method对象.每个Method对象对应一个方法,在获得Method对象之后,就可以通过调用invoke方法来调用该Method对象对应的方法
+	2. 场景使用：属性注入
+3. 访问成员变量
+	1. 通过Class对象的的getField()方法可以获取该类所包含的全部或指定的成员变量Field,Filed提供了如下两组方法来读取和设置成员变量值
+		1. getXxx(Object obj): 获取obj对象的该成员变量的值, 此处的Xxx对应8中基本类型,如果该成员变量的类型是引用类型, 则取消get后面的Xxx;
+		2. setXxx(Object obj, Xxx val): 将obj对象的该成员变量值设置成val值.此处的Xxx对应8种基本类型, 如果该成员类型是引用类型, 则取消set后面的Xxx; 
+	2. getDeclaredXxx方法可以获取所有的成员变量,无论private/public;
+4. 使用反射获取泛型信息
+	- ParameterizedType java.util.Set<java.lang.String>
+	```
+    Field field = Client.class.getDeclaredField("objectMap");
+    Type gType = field.getGenericType();
+	```
+5. 使用反射获取注解信息
+	
+    
+参考文档：[http://www.importnew.com/17616.html](http://www.importnew.com/17616.html "java反射")
+
+### 5. long类型的操作是原子性吗？为什么？
 
 要分情况讨论，对于64位的系统来说是的，对于32位的系统来说不是，为什么呢？
 
