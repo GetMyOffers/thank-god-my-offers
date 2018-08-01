@@ -32,13 +32,22 @@ Spring 应用的 IOC 容器通过 tomcat 的 Servlet 或 Listener 监听启动�
 
 单例 Bean 缓存池：Spring 在 DefaultSingletonBeanRegistry 类中提供了一个用于缓存单实例 Bean 的缓存器，它是一个用 HashMap 实现的缓存器，单实例的 Bean 以 beanName 为键保存在这个 HashMap 中。
 
- 
+
 ### 2. Spring AOP
 
 
 AOP为Aspect Oriented Programming的缩写，意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是Spring框架中的一个重要内容，它通过对既有程序定义一个切入点，然后在其前后切入不同的执行内容，比如常见的有：打开数据库连接/关闭数据库连接、打开事务/关闭事务、记录日志等。基于AOP不会破坏原来程序逻辑，因此它可以很好的对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。
 
 下面主要讲两个内容，一个是如何在Spring Boot中引入Aop功能，二是如何使用Aop做切面去统一处理Web请求的日志。
+
+####实现原理
+
+SpringAOP 的实现分为两种
+
+* 基于 jdk 的动态代理,`java.lang.reflect.Proxy`,需要被代理类实现接口
+  * 最终生成一个实现被代理类接口的类.同时持有被代理对象
+* 基于 cglib 的字节码技术
+  * 最终生成一个被代理类的子类.
 
 #### 准备工作
 
@@ -193,7 +202,7 @@ public class WebLogAspect {
 
 
 }
-  ```
+```
 
 #### 优化：AOP切面的优先级
 
